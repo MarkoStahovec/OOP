@@ -1,0 +1,82 @@
+Valentino Vranić
+Objektovo-orientované programovanie 2014/15
+Kód zo slajdov
+
+
+Strategy
+
+public class Sifrovac {
+   private Sifra sifra;
+   public Sifrovac(Sifra sifra) {
+      this.sifra = sifra;
+   }
+   public void sifrujText(String text) {
+      for(int i = 0; i < text.length(); i++)
+         text.charAt(i) = sifra.sifruj(text.charAt(i));
+   }
+}
+
+public interface Sifra {
+   char sifruj(char c);
+}
+public class SifraA implements Sifra {
+   public char sifruj(char c) {
+      ...
+   }
+}
+public class SifraB implements Sifra {
+   public char sifruj(char c) {
+      ...
+   }
+}
+
+
+
+
+
+Composite
+
+public interface Cast {
+   void info();
+}
+
+public class CastMesta implements Cast {
+   List<Cast> casti;
+
+   public void pridajCast(Cast cast) { ... }
+   public void odstranCast(Cast cast) { ... }
+   public void odstranCast(int i) { ... }
+
+   public void info() {
+      ... \\ vypis informacií o časti mesta
+      
+      \\ výpis informácií o všetkých častiach a budovách tejto časti mesta
+      for (Cast e : casti)
+         e.info();
+   }
+}
+
+public class Budova implements Cast {
+   ... \\ atributy s informaciami o budove
+
+   public void info() {
+      ... \\ výpis informacií o budove
+   }
+   ...
+}
+
+
+\\ použitie: mesto vytvoríme ako akúkoľvek inú časť
+Cast mesto = new Cast();
+
+\\ vytvoríme a do mesta pridáme jeho časti a budovy
+Cast c = new CastMesta();
+c.pridajCast(new Budova());
+...
+mesto.pridaj(c);
+...
+
+\\ výpis všetkých informácií o meste je jednoduchý
+mesto.info();
+
+
